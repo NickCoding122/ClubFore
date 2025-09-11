@@ -10,6 +10,7 @@ html, body {
 }
 
 a {
+  color: #fff;
   text-decoration: underline;
   text-underline-offset: 2px;
 }
@@ -17,8 +18,10 @@ a {
 a:hover {
   opacity: 0.8;
 }
-
-* { outline-offset: 2px; }
+*:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
 @media (prefers-reduced-motion: reduce) {
   * { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
 }

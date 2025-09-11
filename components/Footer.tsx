@@ -28,9 +28,9 @@ export function Footer() {
             placeholder="you@example.com"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="flex-1 border rounded-2xl px-3 py-2 bg-white text-black"
+            className="flex-1 rounded-2xl px-3 py-2 bg-neutral-950 text-white border border-white/20 placeholder-white/40"
           />
-          <button className="rounded-2xl px-4 py-2 bg-white text-black border">
+          <button className="rounded-2xl px-5 py-3 bg-white text-black hover:ring-2 hover:ring-white/20">
             Subscribe
           </button>
         </form>
