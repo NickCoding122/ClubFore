@@ -9,9 +9,9 @@ export function Navbar() {
       <div className="mx-auto max-w-6xl px-4 py-3 flex items-center justify-between text-white">
         <Link href="/" className="font-semibold tracking-widest text-xl">CLUB FORE</Link>
         <nav className="hidden md:flex gap-6 text-sm">
-          <Link href="/products" className="hover:opacity-80">Products</Link>
+          <Link href="/membership" className="hover:opacity-80">Membership</Link>
+          <Link href="/shop" className="hover:opacity-80">Shop</Link>
           <Link href="/about" className="hover:opacity-80">About</Link>
-          <Link href="/contact" className="hover:opacity-80">Contact</Link>
         </nav>
         <button
           aria-label="Menu"
@@ -24,14 +24,14 @@ export function Navbar() {
       {open && (
         <div className="md:hidden border-t border-white/10 bg-black text-white">
           <div className="mx-auto max-w-6xl px-4 py-2 flex flex-col gap-2">
-            <Link href="/products" className="hover:opacity-80" onClick={() => setOpen(false)}>
-              Products
+            <Link href="/membership" className="hover:opacity-80" onClick={() => setOpen(false)}>
+              Membership
+            </Link>
+            <Link href="/shop" className="hover:opacity-80" onClick={() => setOpen(false)}>
+              Shop
             </Link>
             <Link href="/about" className="hover:opacity-80" onClick={() => setOpen(false)}>
               About
-            </Link>
-            <Link href="/contact" className="hover:opacity-80" onClick={() => setOpen(false)}>
-              Contact
             </Link>
           </div>
         </div>
