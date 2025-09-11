@@ -2,9 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
-:root { color-scheme: light dark; }
-html, body { height: 100%; background: #fff; color: #000; }
-* { outline-offset: 2px; }
+:root { color-scheme: dark; }
+html, body { height: 100%; background: #000; color: #fff; }
+a { text-underline-offset: 4px; }
+*:focus-visible { outline: 2px solid rgba(255, 255, 255, 0.6); outline-offset: 2px; }
 @media (prefers-reduced-motion: reduce) {
   * { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
 }

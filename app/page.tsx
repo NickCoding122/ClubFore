@@ -10,17 +10,17 @@ export default function Home() {
       <Section className="py-24">
         <div className="grid md:grid-cols-2 gap-8 items-center">
           <div>
-            <h1 className="text-4xl md:text-5xl font-semibold tracking-tight">Precision meets power.</h1>
+            <h1 className="text-5xl md:text-6xl font-semibold tracking-tight">Precision meets power.</h1>
             <p className="mt-4 text-lg opacity-80">
               Sleek padel gear engineered for control and built to last.
             </p>
             <div className="mt-8 flex gap-3">
-              <Link className="px-5 py-3 bg-black text-white rounded-2xl border" href="/products">Shop Paddles</Link>
-              <Link className="px-5 py-3 border rounded-2xl" href="/contact">Contact</Link>
+              <Link className="px-5 py-3 rounded-2xl bg-white text-black" href="/products">Shop Paddles</Link>
+              <Link className="px-5 py-3 rounded-2xl border border-white/30 text-white" href="/contact">Contact</Link>
             </div>
           </div>
-          <div className="border rounded-2xl p-6 bg-white">
-            <Image src="/logo.svg" width={800} height={400} alt="Club Fore wordmark" className="w-full h-auto" />
+          <div className="rounded-2xl bg-neutral-950 border border-white/10 p-6">
+            <Image src="/logo.svg" width={800} height={400} alt="Club Fore wordmark" className="w-full h-auto rounded-xl border border-white/10" />
           </div>
         </div>
       </Section>
@@ -32,9 +32,9 @@ export default function Home() {
             { title: "Vibration dampening", text: "Composite layups reduce arm fatigue." },
             { title: "Sustainable build", text: "Durable materials for a longer lifecycle." }
           ].map((f) => (
-            <div key={f.title} className="border rounded-2xl p-6">
+            <div key={f.title} className="rounded-2xl bg-neutral-950 border border-white/10 p-6">
               <h3 className="font-medium">{f.title}</h3>
-              <p className="opacity-70 text-sm mt-2">{f.text}</p>
+              <p className="opacity-80 text-sm mt-2">{f.text}</p>
             </div>
           ))}
         </div>
@@ -47,12 +47,22 @@ export default function Home() {
         </div>
         <div className="grid md:grid-cols-3 gap-6">
           {highlights.map((p) => (
-            <Link key={p.id} href={`/products/${p.slug}`} className="border rounded-2xl p-4 hover:opacity-80">
-              <Image src={p.images[0]} alt={p.name} width={600} height={400} className="w-full h-auto rounded-xl border" />
+            <Link
+              key={p.id}
+              href={`/products/${p.slug}`}
+              className="rounded-2xl bg-neutral-950 border border-white/10 p-4 hover:-translate-y-0.5 hover:ring-1 hover:ring-white/20 transition"
+            >
+              <Image
+                src={p.images[0]}
+                alt={p.name}
+                width={600}
+                height={400}
+                className="w-full h-auto rounded-xl border border-white/10"
+              />
               <div className="mt-3 flex items-center justify-between">
                 <div>
                   <div className="font-medium">{p.name}</div>
-                  <div className="text-sm opacity-70">{p.specs.surface}</div>
+                  <div className="text-sm opacity-80">{p.specs.surface}</div>
                 </div>
                 <div className="text-sm font-semibold">£{p.price}</div>
               </div>
