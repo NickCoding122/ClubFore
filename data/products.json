@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "slug": "precision-pro",
+    "name": "Precision Pro",
+    "price": 199,
+    "images": ["/logo.svg"],
+    "specs": { "surface": "Carbon Fiber" }
+  },
+  {
+    "id": 2,
+    "slug": "control-x",
+    "name": "Control X",
+    "price": 179,
+    "images": ["/logo.svg"],
+    "specs": { "surface": "Fiberglass" }
+  },
+  {
+    "id": 3,
+    "slug": "power-lite",
+    "name": "Power Lite",
+    "price": 149,
+    "images": ["/logo.svg"],
+    "specs": { "surface": "Hybrid" }
+  }
+]
