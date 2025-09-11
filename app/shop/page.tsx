@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 
 export default function ShopPage() {
   return (
-    <div className="max-w-6xl mx-auto px-4 py-24 space-y-8">
+    <div id="main" className="max-w-6xl mx-auto px-4 py-24 space-y-8">
       <h1 className="text-6xl md:text-7xl tracking-tight leading-[0.95]">Shop</h1>
       <div className="max-w-[72ch] space-y-6 md:space-y-8">
         <p>Monochrome essentials for on and off court.</p>

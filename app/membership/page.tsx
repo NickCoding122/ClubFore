@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 
 export default function MembershipPage() {
   return (
-    <div className="max-w-4xl mx-auto px-4 py-24 space-y-8">
+    <div id="main" className="max-w-4xl mx-auto px-4 py-24 space-y-8">
       <h1 className="text-6xl md:text-7xl tracking-tight leading-[0.95]">Membership at Club Fore</h1>
       <div className="max-w-[72ch] space-y-6 md:space-y-8">
         <p>A private network for players who value focus over noise.</p>
