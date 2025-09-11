@@ -11,15 +11,17 @@ export default function OpengraphImage() {
           height: "100%",
           width: "100%",
           display: "flex",
+          flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
           background: "#000",
           color: "#fff",
-          fontSize: 128,
           fontWeight: 700,
+          gap: 40,
         }}
       >
-        CLUB FORE
+        <div style={{ fontSize: 128 }}>CLUB FORE</div>
+        <div style={{ fontSize: 48, fontWeight: 400 }}>Precision. Power. Minimalism.</div>
       </div>
     ),
     size
