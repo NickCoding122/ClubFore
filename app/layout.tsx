@@ -21,7 +21,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           Skip to content
         </a>
         <Navbar />
-        <main id="main" className="flex-1">
+        <main className="flex-1">
           {children}
         </main>
         <Footer />
