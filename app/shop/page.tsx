@@ -1,21 +1,22 @@
-import Link from "next/link";
-import { Section } from "@/components/Section";
+import type { Metadata } from "next";
+import { ProductGrid } from "./ProductGrid";
+
+export const metadata: Metadata = {
+  title: "Shop",
+  description: "Monochrome essentials for on and off court.",
+  openGraph: { images: ["/opengraph-image"] },
+  twitter: { images: ["/twitter-image"] }
+};
 
 export default function ShopPage() {
   return (
-    <Section className="max-w-3xl py-24 space-y-8">
-      <h1 className="text-4xl font-bold">Club Fore Apparel</h1>
-      <p>Monochrome essentials for on and off court.</p>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4">
-        <div>CF Logo Tee — Black / White</div>
-        <div>Performance Hoodie — Black</div>
-        <div>Court Cap — Black</div>
-        <div>Minimal Tote — Natural / Black</div>
-        <div>Warm-Up Crew — Black</div>
-        <div>Training Shorts — Black</div>
+    <div className="max-w-6xl mx-auto px-4 py-24 space-y-8">
+      <h1 className="text-6xl md:text-7xl tracking-tight leading-[0.95]">Shop</h1>
+      <div className="max-w-[72ch] space-y-6 md:space-y-8">
+        <p>Monochrome essentials for on and off court.</p>
       </div>
-      <p className="text-sm opacity-60">Clean lines. No loud logos. Built to last.</p>
-      <Link href="/products" className="inline-block px-6 py-3 rounded-2xl bg-white text-black">Enter Shop</Link>
-    </Section>
+      <ProductGrid />
+      <p className="text-sm text-white/70">Clean lines. No loud logos. Built to last.</p>
+    </div>
   );
 }
