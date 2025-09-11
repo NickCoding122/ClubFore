@@ -11,8 +11,7 @@ html, body {
 
 a {
   color: #fff;
-  text-decoration: underline;
-  text-underline-offset: 2px;
+  text-decoration: none;
 }
 
 a:hover {
