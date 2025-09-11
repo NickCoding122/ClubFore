@@ -1,7 +1,9 @@
+import { Section } from "@/components/Section";
+
 export default function ProductsPage() {
   return (
-    <div className="p-4">
-      Products page coming soon.
-    </div>
+    <Section>
+      <p>Products page coming soon.</p>
+    </Section>
   );
 }
