@@ -16,19 +16,26 @@ export default function Home() {
             </p>
             <div className="mt-8 flex gap-3">
               <Link
-                className="px-5 py-3 rounded-2xl bg-white text-black border"
+                className="px-5 py-3 rounded-2xl bg-white text-black hover:ring-2 hover:ring-white/20"
                 href="/products"
               >
                 Shop Paddles
               </Link>
-              <Link className="px-5 py-3 rounded-2xl border text-black" href="/contact">
+              <Link
+                className="px-5 py-3 rounded-2xl border border-white/30 text-white bg-transparent hover:ring-2 hover:ring-white/20"
+                href="/contact"
+              >
                 Contact
               </Link>
             </div>
           </div>
-          <div className="rounded-2xl border border-black/10 p-6 bg-white shadow">
-            <Image src="/logo.svg" width={800} height={400} alt="Club Fore wordmark" className="w-full h-auto" />
-          </div>
+          <Image
+            src="/logo.svg"
+            width={800}
+            height={400}
+            alt="Club Fore wordmark"
+            className="w-full h-auto rounded-2xl border border-white/10"
+          />
         </div>
       </Section>
 
@@ -41,7 +48,7 @@ export default function Home() {
           ].map((f) => (
             <div
               key={f.title}
-              className="rounded-2xl p-6 bg-white border border-black/10 shadow-sm"
+              className="rounded-2xl p-6 bg-neutral-950 border border-white/10"
             >
               <h3 className="font-medium">{f.title}</h3>
               <p className="opacity-70 text-sm mt-2">{f.text}</p>
@@ -62,9 +69,9 @@ export default function Home() {
             <Link
               key={p.id}
               href={`/products/${p.slug}`}
-              className="rounded-2xl p-4 bg-white border border-black/10 shadow-sm transition motion-safe:hover:-translate-y-1 hover:shadow-md"
+              className="rounded-2xl p-4 bg-neutral-950 border border-white/10 transition hover:ring-2 hover:ring-white/20"
             >
-              <div className="aspect-[4/3] w-full overflow-hidden rounded-xl border border-black/10">
+              <div className="aspect-[4/3] w-full overflow-hidden rounded-xl border border-white/10">
                 <Image
                   src={p.images[0]}
                   alt={p.name}

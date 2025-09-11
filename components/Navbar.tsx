@@ -15,7 +15,7 @@ export function Navbar() {
         </nav>
         <button
           aria-label="Menu"
-          className="md:hidden p-2 border border-white/20 rounded"
+          className="md:hidden p-2 border border-white/30 rounded hover:ring-2 hover:ring-white/20"
           onClick={() => setOpen(!open)}
         >
           ☰
