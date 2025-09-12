@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Hero from "@/components/Hero";
+import HeroCourt from "@/components/HeroCourt";
 
 export const metadata: Metadata = {
   title: "Club Fore",
@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 export default function Page() {
   return (
     <main className="bg-black text-white">
-      <Hero />
+      <HeroCourt />
     </main>
   );
 }
