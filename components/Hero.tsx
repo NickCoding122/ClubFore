@@ -10,42 +10,29 @@ export default function Hero() {
     offset: ["start start", "end start"],
   });
 
-  // Stage 1: logo fades and scales back
   const logoScale = useTransform(scrollYProgress, [0, 1], [1, 0.7]);
-  const logoOpacity = useTransform(scrollYProgress, [0, 0.5, 1], [1, 0.4, 0]);
+  const logoOpacity = useTransform(scrollYProgress, [0, 0.3, 1], [1, 0.4, 0]);
 
-  // Stage 2: overhead lights
-  const light1 = useTransform(scrollYProgress, [0.2, 0.4], [0, 1]);
-  const light2 = useTransform(scrollYProgress, [0.23, 0.43], [0, 1]);
-  const light1Offset = useTransform(light1, [0, 1], [600, 0]);
-  const light2Offset = useTransform(light2, [0, 1], [600, 0]);
+  const lightRange: [number, number] = [0.3, 0.5];
+  const lightY = useTransform(scrollYProgress, lightRange, [-400, 0]);
+  const lightOpacity = useTransform(scrollYProgress, lightRange, [0, 1]);
 
-  // Stage 3: net line
-  const net = useTransform(scrollYProgress, [0.45, 0.65], [0, 1]);
-  const netOffset = useTransform(net, [0, 1], [800, 0]);
-
-  // Stage 4: court lines sequential
-  const linesTrigger = useTransform(scrollYProgress, [0.65, 0.66], [0, 1]);
+  const linesTrigger = useTransform(scrollYProgress, [0.5, 1], [0, 1]);
   const linesControls = useAnimation();
   useEffect(() => {
     return linesTrigger.on("change", (latest) => {
       linesControls.start(latest > 0 ? "visible" : "hidden");
     });
-  }, [linesControls, linesTrigger]);
+  }, [linesTrigger, linesControls]);
 
   const groupVariants = {
     hidden: {},
-    visible: {
-      transition: { staggerChildren: 0.2 },
-    },
+    visible: { transition: { staggerChildren: 0.2 } },
   };
 
   const lineVariants = {
-    hidden: (length: number) => ({ strokeDashoffset: length }),
-    visible: {
-      strokeDashoffset: 0,
-      transition: { duration: 0.8 },
-    },
+    hidden: { pathLength: 0 },
+    visible: { pathLength: 1, transition: { duration: 0.8 } },
   };
 
   return (
@@ -53,87 +40,93 @@ export default function Hero() {
       <div className="sticky top-0 h-screen flex items-center justify-center overflow-hidden bg-black text-white">
         <motion.h1
           style={{ scale: logoScale, opacity: logoOpacity }}
-          className="text-[clamp(48px,12vw,160px)] font-extrabold"
+          className="absolute text-[clamp(48px,12vw,160px)] font-extrabold"
         >
           CLUB FORE
         </motion.h1>
 
         <motion.svg
-          viewBox="0 0 1000 640"
-          className="absolute inset-0 w-full max-w-5xl mx-auto"
+          viewBox="0 0 1000 600"
+          className="absolute inset-0 w-full h-full max-w-5xl mx-auto"
         >
-          {/* Overhead lights */}
-          <motion.line
-            x1="200"
-            x2="800"
-            y1="80"
-            y2="80"
-            stroke="currentColor"
-            strokeWidth="4"
-            strokeDasharray="600"
-            style={{ strokeDashoffset: light1Offset }}
+          {/* Lights */}
+          <motion.rect
+            x="220"
+            width="40"
+            height="400"
+            fill="currentColor"
+            style={{
+              y: lightY,
+              opacity: lightOpacity,
+              rotate: -10,
+              originY: 0,
+            }}
           />
-          <motion.line
-            x1="200"
-            x2="800"
-            y1="120"
-            y2="120"
-            stroke="currentColor"
-            strokeWidth="4"
-            strokeDasharray="600"
-            style={{ strokeDashoffset: light2Offset }}
-          />
-
-          {/* Net line */}
-          <motion.line
-            x1="100"
-            x2="900"
-            y1="320"
-            y2="320"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeDasharray="800"
-            style={{ strokeDashoffset: netOffset }}
+          <motion.rect
+            x="740"
+            width="40"
+            height="400"
+            fill="currentColor"
+            style={{
+              y: lightY,
+              opacity: lightOpacity,
+              rotate: 10,
+              originY: 0,
+            }}
           />
 
           {/* Court lines */}
           <motion.g
-            variants={groupVariants}
-            initial="hidden"
-            animate={linesControls}
             stroke="currentColor"
             strokeWidth="2"
             fill="none"
+            variants={groupVariants}
+            initial="hidden"
+            animate={linesControls}
           >
+            {/* Net line */}
+            <motion.line
+              x1="100"
+              y1="320"
+              x2="900"
+              y2="280"
+              strokeDasharray="1"
+              variants={lineVariants}
+            />
+            {/* Center line */}
             <motion.line
               x1="500"
-              y1="60"
+              y1="280"
               x2="500"
-              y2="580"
-              strokeDasharray="520"
+              y2="600"
+              strokeDasharray="1"
               variants={lineVariants}
-              custom={520}
             />
-            <motion.rect
-              x="80"
-              y="60"
-              width="840"
-              height="520"
-              strokeDasharray="2720"
+            {/* Sidelines */}
+            <motion.line
+              x1="180"
+              y1="600"
+              x2="320"
+              y2="280"
+              strokeDasharray="1"
               variants={lineVariants}
-              custom={2720}
+            />
+            <motion.line
+              x1="820"
+              y1="600"
+              x2="680"
+              y2="280"
+              strokeDasharray="1"
+              variants={lineVariants}
             />
           </motion.g>
         </motion.svg>
 
-        {/* Vignette + grid background */}
         <div
           className="absolute inset-0 -z-10"
           style={{
-            backgroundImage:
-              "radial-gradient(circle at center, rgba(255,255,255,0.08), transparent 70%)," +
-              "repeating-linear-gradient(rgba(255,255,255,0.05) 0 1px, transparent 1px 40px)," +
-              "repeating-linear-gradient(90deg, rgba(255,255,255,0.05) 0 1px, transparent 1px 40px)",
+            background:
+              "radial-gradient(800px 400px at 50% 80%, rgba(255,255,255,0.05), transparent 70%)",
           }}
         />
       </div>
