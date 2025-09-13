@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "About",
-  description: "Minimalist padel gear designed in London, played everywhere.",
+  description:
+    "Club Fore was founded on a simple idea: padel deserves a setting as inspiring as the sport itself.",
   openGraph: { images: ["/opengraph-image"] },
   twitter: { images: ["/twitter-image"] }
 };
@@ -10,12 +11,19 @@ export const metadata: Metadata = {
 export default function AboutPage() {
   return (
     <div id="main" className="max-w-2xl mx-auto px-4 py-24 space-y-6">
-      <h1 className="text-6xl md:text-7xl tracking-tight leading-[0.95]">About Club Fore</h1>
+      <h1 className="text-6xl md:text-7xl tracking-tight leading-[0.95]">About Us</h1>
       <div className="max-w-[72ch] space-y-6 md:space-y-8">
-        <p>We strip everything back to what matters: feel, balance, longevity.</p>
-        <p>Every product starts on court and ends in your hand.</p>
+        <p>
+          Club Fore was founded on a simple idea: padel deserves a setting as inspiring as the
+          sport itself. Our clubs are designed with clarity, balance, and detail in mind — courts
+          that play beautifully, atmospheres that feel effortless, and a culture built around the joy
+          of play.
+        </p>
+        <p>
+          Padel is more than competition. It’s connection, rhythm, and energy shared. Club Fore is
+          where that spirit comes to life.
+        </p>
       </div>
-      <p className="text-white/60">Designed in London. Played everywhere.</p>
     </div>
   );
 }
