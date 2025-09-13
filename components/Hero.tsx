@@ -24,7 +24,8 @@ export default function Hero() {
       net: { hCenter: 0.88, hPost: 0.92, postMax: 1.05 },
     };
 
-    const CAM = { x: 2.5, y: 5.0, z: 1.7, f: 8.0 }; // start close (logo fills screen)
+    // Camera starts near the far wall (logo fills view) and scrolls backward
+    const CAM = { x: COURT.L - 2.5, y: 5.0, z: 1.7, f: 8.0 };
 
     const canvas = canvasRef.current!;
     const ctx = canvas.getContext("2d")!;
@@ -39,22 +40,22 @@ export default function Hero() {
     window.addEventListener("resize", resize);
     resize();
 
-    // Scroll drives camera.x (distance from back wall)
+    // Scroll drives camera.x: from far wall (~17.5) back to ~2.5
     function onScroll() {
       const scrollMax = document.body.scrollHeight - window.innerHeight;
       const t = scrollMax > 0 ? window.scrollY / scrollMax : 0;
-      CAM.x = 2.5 + t * 15; // scroll from ~2.5 (logo) → 17.5 (full court)
+      CAM.x = COURT.L - 2.5 - t * 15; // 17.5 → 2.5
     }
     window.addEventListener("scroll", onScroll);
     onScroll();
 
     function project(p: any, scale: number, cx: number, cy: number) {
-      const dx = p.x - CAM.x,
-        dy = p.y - CAM.y,
+      const dx = p.x - CAM.x;
+      if (dx <= 0) return null;
+      const dy = p.y - CAM.y,
         dz = p.z - CAM.z;
-      const depth = Math.max(dx, 1e-3);
-      const k = CAM.f / depth;
-      return { x: cx + dy * k * scale, y: cy - dz * k * scale, depth };
+      const k = CAM.f / dx;
+      return { x: cx + dy * k * scale, y: cy - dz * k * scale };
     }
 
     function drawSegment(
@@ -66,9 +67,9 @@ export default function Hero() {
       w = 2,
       style = "#fff"
     ) {
-      const A = project(a, S, cx, cy),
-        B = project(b, S, cx, cy);
-      if (A.depth <= 0 && B.depth <= 0) return;
+      const A = project(a, S, cx, cy);
+      const B = project(b, S, cx, cy);
+      if (!A || !B) return;
       ctx.strokeStyle = style;
       ctx.lineWidth = w;
       ctx.beginPath();
@@ -87,14 +88,14 @@ export default function Hero() {
     ) {
       if (!points.length) return;
       const P0 = project(points[0], S, cx, cy);
-      if (P0.depth <= 0) return;
+      if (!P0) return;
       ctx.strokeStyle = style;
       ctx.lineWidth = w;
       ctx.beginPath();
       ctx.moveTo(P0.x, P0.y);
       for (let i = 1; i < points.length; i++) {
         const Pi = project(points[i], S, cx, cy);
-        if (Pi.depth > 0) ctx.lineTo(Pi.x, Pi.y);
+        if (Pi) ctx.lineTo(Pi.x, Pi.y);
       }
       ctx.stroke();
     }
@@ -155,6 +156,21 @@ export default function Hero() {
         else drawPolyline(s, S, cx, cy, 2);
       }
       for (const seg of model.lines) drawSegment(seg[0], seg[1], S, cx, cy, 2, "#fff");
+
+      // Club Fore logo on far wall
+      const logoPos = { x: COURT.L - 0.01, y: COURT.W / 2, z: 2.5 };
+      const lp = project(logoPos, S, cx, cy);
+      if (lp) {
+        const depth = logoPos.x - CAM.x;
+        const k = CAM.f / depth;
+        const fontSize = 3 * k * S; // ~3m text height
+        ctx.fillStyle = "#fff";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.font = `bold ${fontSize}px sans-serif`;
+        ctx.fillText("CLUB FORE", lp.x, lp.y);
+      }
+
       const netRes = 20;
       for (let i = 0; i < netRes; i++) {
         const t = i / netRes,
