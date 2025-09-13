@@ -15,8 +15,6 @@ export default function Hero() {
       W: 10.0,
       glassH: 3.0,
       backTotalH: 4.5,
-      sideH: 3.5,
-      sideCornerH: 4.0,
       cornerLen: 2.0,
       lineWidth: 0.05,
       serviceFromNet: 6.95,
@@ -143,9 +141,9 @@ export default function Hero() {
         [{ x: L, y: 0, z: COURT.backTotalH }, { x: L, y: W, z: COURT.backTotalH }]
       );
       const sidePosts = [
-        { x: COURT.cornerLen, h: COURT.sideCornerH },
-        { x: L / 2, h: COURT.sideH },
-        { x: L - COURT.cornerLen, h: COURT.sideCornerH },
+        { x: COURT.cornerLen, h: COURT.backTotalH },
+        { x: L / 2, h: COURT.backTotalH },
+        { x: L - COURT.cornerLen, h: COURT.backTotalH },
       ];
       for (const p of sidePosts) {
         g.push(
