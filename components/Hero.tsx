@@ -33,7 +33,7 @@ export default function Hero() {
     function resize() {
       const dpr = Math.max(1, window.devicePixelRatio || 1);
       canvas.width = Math.floor(window.innerWidth * dpr);
-      canvas.height = Math.floor(window.innerHeight * dpr * 0.9);
+      canvas.height = Math.floor(window.innerHeight * dpr);
       ctx.setTransform(1, 0, 0, 1, 0, 0);
       ctx.scale(dpr, dpr);
     }
@@ -151,7 +151,7 @@ export default function Hero() {
         vh = window.innerHeight - pad * 2;
       const S = Math.min(vw / (COURT.W * 1.1), vh / (COURT.ceilingH * 2.0));
       const cx = window.innerWidth / 2,
-        cy = window.innerHeight * 0.75;
+        cy = window.innerHeight * 0.6;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       ctx.lineJoin = "round";
       ctx.lineCap = "round";
