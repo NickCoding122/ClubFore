@@ -134,6 +134,38 @@ export default function Hero() {
         [{ x: L / 2, y: 0, z: 0 }, { x: L / 2, y: 0, z: COURT.net.postMax }],
         [{ x: L / 2, y: W, z: 0 }, { x: L / 2, y: W, z: COURT.net.postMax }]
       );
+
+      // walls
+      const corners = [
+        { x: 0, y: 0 },
+        { x: 0, y: W },
+        { x: L, y: 0 },
+        { x: L, y: W },
+      ];
+      for (const c of corners)
+        g.push([{ x: c.x, y: c.y, z: 0 }, { x: c.x, y: c.y, z: COURT.backTotalH }]);
+      g.push(
+        [{ x: 0, y: 0, z: COURT.backTotalH }, { x: 0, y: W, z: COURT.backTotalH }],
+        [{ x: L, y: 0, z: COURT.backTotalH }, { x: L, y: W, z: COURT.backTotalH }]
+      );
+      const sidePosts = [
+        { x: COURT.cornerLen, h: COURT.sideCornerH },
+        { x: L / 2, h: COURT.sideH },
+        { x: L - COURT.cornerLen, h: COURT.sideCornerH },
+      ];
+      for (const p of sidePosts) {
+        g.push(
+          [{ x: p.x, y: 0, z: 0 }, { x: p.x, y: 0, z: p.h }],
+          [{ x: p.x, y: W, z: 0 }, { x: p.x, y: W, z: p.h }]
+        );
+      }
+      const sideTopPts = [
+        { x: 0, h: COURT.backTotalH },
+        ...sidePosts,
+        { x: L, h: COURT.backTotalH },
+      ];
+      g.push(sideTopPts.map((p) => ({ x: p.x, y: 0, z: p.h }))); // y = 0 side
+      g.push(sideTopPts.map((p) => ({ x: p.x, y: W, z: p.h }))); // y = W side
       const netPts: any[] = [];
       const steps = 20;
       for (let i = 0; i <= steps; i++) {
