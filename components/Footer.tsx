@@ -16,7 +16,7 @@ export function Footer() {
   return (
     <footer className="border-t border-white/10 mt-16">
       <div className="mx-auto max-w-6xl px-4 py-6 flex flex-col gap-4 md:flex-row md:items-center md:justify-between text-white">
-        <p className="text-sm">Club Fore — Precision meets power.</p>
+        <p className="text-sm">Designed in London. Played everywhere.</p>
         {sent ? (
           <p className="text-sm">Thanks — you’re on the list.</p>
         ) : (

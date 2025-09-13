@@ -11,14 +11,14 @@ export function Navbar() {
           CLUB FORE
         </Link>
         <nav className="hidden md:flex gap-6 text-sm">
-          <Link href="/membership" className="focus:outline-white/60">
-            Membership
+          <Link href="/about" className="focus:outline-white/60">
+            About
           </Link>
           <Link href="/shop" className="focus:outline-white/60">
             Shop
           </Link>
-          <Link href="/about" className="focus:outline-white/60">
-            About
+          <Link href="/membership" className="focus:outline-white/60">
+            Membership
           </Link>
         </nav>
         <button
@@ -32,11 +32,11 @@ export function Navbar() {
       {open && (
         <div className="md:hidden bg-black text-white divide-y divide-white/10">
           <Link
-            href="/membership"
+            href="/about"
             className="block px-4 py-4 focus:outline-white/60"
             onClick={() => setOpen(false)}
           >
-            Membership
+            About
           </Link>
           <Link
             href="/shop"
@@ -46,11 +46,11 @@ export function Navbar() {
             Shop
           </Link>
           <Link
-            href="/about"
+            href="/membership"
             className="block px-4 py-4 focus:outline-white/60"
             onClick={() => setOpen(false)}
           >
-            About
+            Membership
           </Link>
         </div>
       )}
