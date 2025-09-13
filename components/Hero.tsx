@@ -124,10 +124,11 @@ export default function Hero() {
       }
       const s1x = L / 2 - COURT.serviceFromNet,
         s2x = L / 2 + COURT.serviceFromNet;
+      const halfLine = COURT.lineWidth / 2;
       const lines = [
-        // sidelines
-        [{ x: 0, y: 0, z: 0 }, { x: L, y: 0, z: 0 }],
-        [{ x: 0, y: W, z: 0 }, { x: L, y: W, z: 0 }],
+        // sidelines (slightly inset from outer edge)
+        [{ x: 0, y: halfLine, z: 0 }, { x: L, y: halfLine, z: 0 }],
+        [{ x: 0, y: W - halfLine, z: 0 }, { x: L, y: W - halfLine, z: 0 }],
         // baselines
         [{ x: 0, y: 0, z: 0 }, { x: 0, y: W, z: 0 }],
         [{ x: L, y: 0, z: 0 }, { x: L, y: W, z: 0 }],
