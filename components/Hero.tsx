@@ -24,8 +24,8 @@ export default function Hero() {
       net: { hCenter: 0.88, hPost: 0.92, postMax: 1.05 },
     };
 
-    // Camera starts at the back wall (x = 0) so the logo fills the screen
-    const CAM = { x: 0, y: 5.0, z: 1.7, f: 3.0 };
+    // Camera starts just in front of the near wall (x ≈ 25) so the logo fills the screen
+    const CAM = { x: 25, y: 5.0, z: 1.7, f: 3.0 };
 
     const canvas = canvasRef.current!;
     const ctx = canvas.getContext("2d")!;
@@ -40,18 +40,18 @@ export default function Hero() {
     window.addEventListener("resize", resize);
     resize();
 
-    // Scroll drives camera.x, pulling back to reveal the court
+    // Scroll drives camera.x from ~25 (logo) back toward the court (~5)
     let scrollT = 0;
     function onScroll() {
       const scrollMax = document.body.scrollHeight - window.innerHeight;
       scrollT = scrollMax > 0 ? window.scrollY / scrollMax : 0;
-      CAM.x = scrollT * 12.5; // from back wall (0) to ~12.5
+      CAM.x = 25 - scrollT * 20; // from near wall (25) to ~5
     }
     window.addEventListener("scroll", onScroll);
     onScroll();
 
     function project(p: any, scale: number, cx: number, cy: number) {
-      const dx = p.x - CAM.x,
+      const dx = CAM.x - p.x,
         dy = p.y - CAM.y,
         dz = p.z - CAM.z;
       const depth = Math.max(dx, 1e-3);
