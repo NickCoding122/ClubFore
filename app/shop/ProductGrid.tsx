@@ -6,6 +6,8 @@ import products from "@/data/products.json";
 type Product = {
   id: number;
   name: string;
+  price: number;
+  description: string;
   images: string[];
 };
 
@@ -44,9 +46,10 @@ export function ProductGrid() {
               height={400}
               className="w-full h-48 object-cover bg-neutral-950"
             />
-            <div className="p-4">
-              <div className="text-sm uppercase tracking-wide text-white/80">{p.name}</div>
-            </div>
+              <div className="p-4">
+                <div className="text-sm uppercase tracking-wide text-white/80">{p.name}</div>
+                <div className="text-sm text-white/60 mt-1">${p.price}</div>
+              </div>
           </button>
         ))}
       </div>
@@ -57,7 +60,8 @@ export function ProductGrid() {
             className="w-full max-w-md space-y-4 bg-neutral-950 border border-white/10 rounded-2xl p-6"
           >
             <h2 className="text-xl font-semibold">Register Interest</h2>
-            <p className="text-sm text-white/70">{selected.name}</p>
+            <p className="text-sm text-white/70">{selected.name} – ${selected.price}</p>
+            <p className="text-sm text-white/70">{selected.description}</p>
             <input
               type="text"
               required

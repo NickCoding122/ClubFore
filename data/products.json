@@ -1,26 +1,58 @@
 [
   {
     "id": 1,
-    "slug": "precision-pro",
-    "name": "Precision Pro",
-    "price": 199,
-    "images": ["/logo.svg"],
-    "specs": { "surface": "Carbon Fiber" }
+    "slug": "cap",
+    "name": "Club Fore Cap",
+    "price": 25,
+    "description": "Breathable performance cap with subtle Club Fore branding.",
+    "images": ["/logo.svg"]
   },
   {
     "id": 2,
-    "slug": "control-x",
-    "name": "Control X",
-    "price": 179,
-    "images": ["/logo.svg"],
-    "specs": { "surface": "Fiberglass" }
+    "slug": "shirt",
+    "name": "Club Fore Shirt",
+    "price": 35,
+    "description": "Lightweight moisture-wicking tee for training and match day.",
+    "images": ["/logo.svg"]
   },
   {
     "id": 3,
-    "slug": "power-lite",
-    "name": "Power Lite",
-    "price": 149,
-    "images": ["/logo.svg"],
-    "specs": { "surface": "Hybrid" }
+    "slug": "shoes",
+    "name": "Court Shoes",
+    "price": 120,
+    "description": "All-court shoes with responsive cushioning and durable grip.",
+    "images": ["/logo.svg"]
+  },
+  {
+    "id": 4,
+    "slug": "racket",
+    "name": "Club Fore Racket",
+    "price": 150,
+    "description": "Balanced padel racket engineered for control and power.",
+    "images": ["/logo.svg"]
+  },
+  {
+    "id": 5,
+    "slug": "hoodie",
+    "name": "Club Fore Hoodie",
+    "price": 60,
+    "description": "Soft fleece hoodie with clean monochrome lines.",
+    "images": ["/logo.svg"]
+  },
+  {
+    "id": 6,
+    "slug": "towel",
+    "name": "Microfiber Towel",
+    "price": 20,
+    "description": "Quick-drying microfiber towel sized for courtside use.",
+    "images": ["/logo.svg"]
+  },
+  {
+    "id": 7,
+    "slug": "water-bottle",
+    "name": "Water Bottle",
+    "price": 15,
+    "description": "Insulated stainless steel bottle that keeps drinks cold for hours.",
+    "images": ["/logo.svg"]
   }
 ]
