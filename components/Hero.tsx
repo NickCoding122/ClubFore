@@ -125,10 +125,16 @@ export default function Hero() {
       const s1x = L / 2 - COURT.serviceFromNet,
         s2x = L / 2 + COURT.serviceFromNet;
       const lines = [
+        // sidelines
         [{ x: 0, y: 0, z: 0 }, { x: L, y: 0, z: 0 }],
         [{ x: 0, y: W, z: 0 }, { x: L, y: W, z: 0 }],
+        // baselines
+        [{ x: 0, y: 0, z: 0 }, { x: 0, y: W, z: 0 }],
+        [{ x: L, y: 0, z: 0 }, { x: L, y: W, z: 0 }],
+        // service lines
         [{ x: s1x, y: 0, z: 0 }, { x: s1x, y: W, z: 0 }],
         [{ x: s2x, y: 0, z: 0 }, { x: s2x, y: W, z: 0 }],
+        // center line
         [{ x: s1x, y: W / 2, z: 0 }, { x: L / 2, y: W / 2, z: 0 }],
         [{ x: L / 2, y: W / 2, z: 0 }, { x: s2x, y: W / 2, z: 0 }],
       ];
@@ -163,7 +169,7 @@ export default function Hero() {
       if (lp) {
         const depth = logoPos.x - CAM.x;
         const k = CAM.f / depth;
-        const fontSize = 3 * k * S; // ~3m text height
+        const fontSize = 1 * k * S; // ~1m text height
         ctx.fillStyle = "#fff";
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
