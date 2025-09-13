@@ -1,219 +1,197 @@
 "use client";
 
-import { useRef } from "react";
-import { motion, useScroll, useTransform, MotionValue } from "framer-motion";
+import { useEffect, useRef } from "react";
 
 /**
- * Cinematic, single-viewport hero:
- * - Logo fades "into" the back wall
- * - Two angled ceiling light strips descend
- * - Court lines draw in with perspective to a vanishing point
- * - No below-the-fold content; scroll only drives animation
+ * Canvas-based padel court render.
+ * Camera moves back as you scroll (no slider).
  */
 export default function Hero() {
-  const ref = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start start", "end start"], // 200vh scrub range
-  });
+  const canvasRef = useRef<HTMLCanvasElement>(null);
 
-  // TIMING MAP (tweakable):
-  // 0.00–0.30  Logo recede/fade
-  // 0.30–0.55  Lights draw down
-  // 0.50–0.65  Net + back-wall line
-  // 0.60–1.00  Remaining court lines
+  useEffect(() => {
+    const COURT = {
+      L: 20.0,
+      W: 10.0,
+      glassH: 3.0,
+      backTotalH: 4.5,
+      sideH: 3.5,
+      sideCornerH: 4.0,
+      cornerLen: 2.0,
+      lineWidth: 0.05,
+      serviceFromNet: 6.95,
+      ceilingH: 6.0,
+      net: { hCenter: 0.88, hPost: 0.92, postMax: 1.05 },
+    };
 
-  // Logo transforms
-  const logoScale = useTransform(scrollYProgress, [0, 0.3], [1, 0.72]);
-  const logoOpacity = useTransform(scrollYProgress, [0, 0.18, 0.3], [1, 0.55, 0]);
-  const logoY = useTransform(scrollYProgress, [0, 0.3], [0, -80]);
+    const CAM = { x: 2.5, y: 5.0, z: 1.7, f: 8.0 }; // start close (logo fills screen)
 
-  // Light strips draw (0 -> 1)
-  const lightDraw = useTransform(scrollYProgress, [0.3, 0.55], [1, 0]); // dashoffset multiplier
+    const canvas = canvasRef.current!;
+    const ctx = canvas.getContext("2d")!;
 
-  // Lines draw windows
-  const netDraw   = useTransform(scrollYProgress, [0.5, 0.65], [1, 0]);
-  const linesDraw = useTransform(scrollYProgress, [0.6, 1.0], [1, 0]);
+    function resize() {
+      const dpr = Math.max(1, window.devicePixelRatio || 1);
+      canvas.width = Math.floor(window.innerWidth * dpr);
+      canvas.height = Math.floor(window.innerHeight * dpr * 0.9);
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
+      ctx.scale(dpr, dpr);
+    }
+    window.addEventListener("resize", resize);
+    resize();
 
-  return (
-    <section ref={ref} className="relative h-[200vh]">
-      <div className="sticky top-0 h-screen overflow-hidden">
-        {/* Digital room vignette (pure CSS) */}
-        <div
-          aria-hidden
-          className="absolute inset-0 pointer-events-none"
-          style={{
-            background:
-              "radial-gradient(1200px 700px at 50% 85%, rgba(255,255,255,0.06), transparent 60%)",
-          }}
-        />
-        {/* Subtle grid for structure */}
-        <div
-          aria-hidden
-          className="absolute inset-0 opacity-15"
-          style={{
-            backgroundImage:
-              `linear-gradient(to right, rgba(255,255,255,0.06) 1px, transparent 1px),
-               linear-gradient(to bottom, rgba(255,255,255,0.06) 1px, transparent 1px)`,
-            backgroundSize: "48px 48px, 48px 48px",
-          }}
-        />
+    // Scroll drives camera.x (distance from back wall)
+    function onScroll() {
+      const scrollMax = document.body.scrollHeight - window.innerHeight;
+      const t = scrollMax > 0 ? window.scrollY / scrollMax : 0;
+      CAM.x = 2.5 + t * 15; // scroll from ~2.5 (logo) → 17.5 (full court)
+    }
+    window.addEventListener("scroll", onScroll);
+    onScroll();
 
-        {/* Center stack */}
-        <div className="relative z-10 grid place-items-center h-full">
-          {/* LOGO */}
-          <motion.h1
-            style={{ scale: logoScale, opacity: logoOpacity, y: logoY }}
-            className="select-none text-[clamp(56px,12vw,160px)] font-extrabold tracking-tight leading-[0.9] will-change-transform"
-          >
-            CLUB FORE
-          </motion.h1>
+    function project(p: any, scale: number, cx: number, cy: number) {
+      const dx = p.x - CAM.x,
+        dy = p.y - CAM.y,
+        dz = p.z - CAM.z;
+      const depth = Math.max(dx, 1e-3);
+      const k = CAM.f / depth;
+      return { x: cx + dy * k * scale, y: cy - dz * k * scale, depth };
+    }
 
-          {/* SVG SCENE */}
-          <SceneSVG
-            lightDraw={lightDraw}
-            netDraw={netDraw}
-            linesDraw={linesDraw}
-          />
-        </div>
-      </div>
-    </section>
-  );
-}
+    function drawSegment(
+      a: any,
+      b: any,
+      S: number,
+      cx: number,
+      cy: number,
+      w = 2,
+      style = "#fff"
+    ) {
+      const A = project(a, S, cx, cy),
+        B = project(b, S, cx, cy);
+      if (A.depth <= 0 && B.depth <= 0) return;
+      ctx.strokeStyle = style;
+      ctx.lineWidth = w;
+      ctx.beginPath();
+      ctx.moveTo(A.x, A.y);
+      ctx.lineTo(B.x, B.y);
+      ctx.stroke();
+    }
 
-function SceneSVG({
-  lightDraw,
-  netDraw,
-  linesDraw,
-}: {
-  lightDraw: MotionValue<number>;
-  netDraw: MotionValue<number>;
-  linesDraw: MotionValue<number>;
-}) {
-  // Vanishing point tuned to match the reference render
-  const VP = { x: 500, y: 190 };
-
-  return (
-    <motion.svg
-      viewBox="0 0 1000 640"
-      className="absolute inset-0 m-auto max-w-[96vw] max-h-[80vh]"
-      // Bind dash variables to MotionValues for all paths
-      style={
-        {
-          // @ts-ignore custom props
-          "--dashLights": lightDraw,
-          "--dashNet": netDraw,
-          "--dashLines": linesDraw,
-        } as any
+    function drawPolyline(
+      points: any[],
+      S: number,
+      cx: number,
+      cy: number,
+      w = 2,
+      style = "#fff"
+    ) {
+      if (!points.length) return;
+      const P0 = project(points[0], S, cx, cy);
+      if (P0.depth <= 0) return;
+      ctx.strokeStyle = style;
+      ctx.lineWidth = w;
+      ctx.beginPath();
+      ctx.moveTo(P0.x, P0.y);
+      for (let i = 1; i < points.length; i++) {
+        const Pi = project(points[i], S, cx, cy);
+        if (Pi.depth > 0) ctx.lineTo(Pi.x, Pi.y);
       }
-      aria-hidden
-    >
-      <Defs />
+      ctx.stroke();
+    }
 
-      {/* CEILING LIGHT STRIPS (angled, receding) */}
-      <g filter="url(#glow)">
-        {/* Left strip: from ceiling to near vanishing layer */}
-        <motion.line
-          x1={320}
-          y1={-40}
-          x2={300}
-          y2={VP.y}
-          stroke="white"
-          strokeWidth={6}
-          className="[stroke-dasharray:520] [stroke-dashoffset:calc(520*var(--dashLights))]"
-          strokeLinecap="round"
-        />
-        {/* Right strip */}
-        <motion.line
-          x1={680}
-          y1={-40}
-          x2={700}
-          y2={VP.y}
-          stroke="white"
-          strokeWidth={6}
-          className="[stroke-dasharray:520] [stroke-dashoffset:calc(520*var(--dashLights))]"
-          strokeLinecap="round"
-        />
-      </g>
+    function build() {
+      const g: any[] = [];
+      const L = COURT.L,
+        W = COURT.W;
+      g.push(
+        [{ x: 0, y: 0, z: 0 }, { x: L, y: 0, z: 0 }],
+        [{ x: L, y: 0, z: 0 }, { x: L, y: W, z: 0 }],
+        [{ x: L, y: W, z: 0 }, { x: 0, y: W, z: 0 }],
+        [{ x: 0, y: W, z: 0 }, { x: 0, y: 0, z: 0 }],
+        [{ x: L / 2, y: 0, z: 0 }, { x: L / 2, y: 0, z: COURT.net.postMax }],
+        [{ x: L / 2, y: W, z: 0 }, { x: L / 2, y: W, z: COURT.net.postMax }]
+      );
+      const netPts: any[] = [];
+      const steps = 20;
+      for (let i = 0; i <= steps; i++) {
+        const t = i / steps;
+        const y = t * W;
+        const h =
+          COURT.net.hCenter +
+          (COURT.net.hPost - COURT.net.hCenter) * Math.pow((y - W / 2) / (W / 2), 2);
+        netPts.push({ x: L / 2, y, z: h });
+      }
+      const s1x = L / 2 - COURT.serviceFromNet,
+        s2x = L / 2 + COURT.serviceFromNet;
+      const lines = [
+        [{ x: 0, y: 0, z: 0 }, { x: L, y: 0, z: 0 }],
+        [{ x: 0, y: W, z: 0 }, { x: L, y: W, z: 0 }],
+        [{ x: s1x, y: 0, z: 0 }, { x: s1x, y: W, z: 0 }],
+        [{ x: s2x, y: 0, z: 0 }, { x: s2x, y: W, z: 0 }],
+        [{ x: s1x, y: W / 2, z: 0 }, { x: L / 2, y: W / 2, z: 0 }],
+        [{ x: L / 2, y: W / 2, z: 0 }, { x: s2x, y: W / 2, z: 0 }],
+      ];
+      const strips: any[] = [];
+      for (let y = 3; y < W; y += 4)
+        strips.push([{ x: 0, y: y, z: COURT.ceilingH }, { x: L, y: y, z: COURT.ceilingH }]);
+      return { segments: g, lines, netPts, strips };
+    }
+    const model = build();
 
-      {/* COURT LINES */}
-      <g mask="url(#depth)" stroke="white">
-        {/* Back-wall base line (thin, near VP) */}
-        <motion.line
-          x1={160}
-          y1={VP.y + 40}
-          x2={840}
-          y2={VP.y + 40}
-          strokeWidth={1.5}
-          className="[stroke-dasharray:800] [stroke-dashoffset:calc(800*var(--dashLines))]"
-        />
+    function draw() {
+      const pad = 40,
+        vw = window.innerWidth - pad * 2,
+        vh = window.innerHeight - pad * 2;
+      const S = Math.min(vw / (COURT.W * 1.1), vh / (COURT.ceilingH * 2.0));
+      const cx = window.innerWidth / 2,
+        cy = window.innerHeight * 0.75;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.lineJoin = "round";
+      ctx.lineCap = "round";
+      for (const seg of model.segments.slice(0, 4)) drawSegment(seg[0], seg[1], S, cx, cy, 2);
+      for (let i = 4; i < model.segments.length; i++) {
+        const s = model.segments[i];
+        if (s.length === 2) drawSegment(s[0], s[1], S, cx, cy, 2);
+        else drawPolyline(s, S, cx, cy, 2);
+      }
+      for (const seg of model.lines) drawSegment(seg[0], seg[1], S, cx, cy, 2, "#fff");
+      const netRes = 20;
+      for (let i = 0; i < netRes; i++) {
+        const t = i / netRes,
+          y = t * COURT.W;
+        const h =
+          COURT.net.hCenter +
+          (COURT.net.hPost - COURT.net.hCenter) * Math.pow((y - COURT.W / 2) / (COURT.W / 2), 2);
+        drawSegment({ x: COURT.L / 2, y, z: 0 }, { x: COURT.L / 2, y, z: h }, S, cx, cy, 1, "#777");
+      }
+      for (let j = 0; j < 8; j++) {
+        const z = j * (COURT.net.hPost / 8);
+        drawSegment(
+          { x: COURT.L / 2, y: 0, z },
+          { x: COURT.L / 2, y: COURT.W, z },
+          S,
+          cx,
+          cy,
+          1,
+          "#777"
+        );
+      }
+      drawPolyline(model.netPts, S, cx, cy, 2, "#fff");
+      for (const strip of model.strips) drawSegment(strip[0], strip[1], S, cx, cy, 5, "#888");
+    }
 
-        {/* NET (slight perspective tilt) */}
-        <motion.line
-          x1={120}
-          y1={380}
-          x2={880}
-          y2={370}
-          strokeWidth={2.5}
-          className="[stroke-dasharray:820] [stroke-dashoffset:calc(820*var(--dashNet))]"
-        />
+    function loop() {
+      draw();
+      requestAnimationFrame(loop);
+    }
+    loop();
 
-        {/* CENTER LINE (from back wall toward camera) */}
-        <motion.line
-          x1={VP.x}
-          y1={VP.y + 40}
-          x2={VP.x}
-          y2={620}
-          strokeWidth={3}
-          className="[stroke-dasharray:460] [stroke-dashoffset:calc(460*var(--dashLines))]"
-        />
+    return () => {
+      window.removeEventListener("resize", resize);
+      window.removeEventListener("scroll", onScroll);
+    };
+  }, []);
 
-        {/* LEFT SIDELINE (converging) */}
-        <motion.line
-          x1={200}
-          y1={VP.y + 50}
-          x2={80}
-          y2={620}
-          strokeWidth={2.5}
-          className="[stroke-dasharray:520] [stroke-dashoffset:calc(520*var(--dashLines))]"
-        />
-
-        {/* RIGHT SIDELINE (converging) */}
-        <motion.line
-          x1={800}
-          y1={VP.y + 50}
-          x2={920}
-          y2={620}
-          strokeWidth={2.5}
-          className="[stroke-dasharray:520] [stroke-dashoffset:calc(520*var(--dashLines))]"
-        />
-      </g>
-    </motion.svg>
-  );
+  return <canvas ref={canvasRef} className="w-screen h-screen bg-black" />;
 }
 
-/** SVG defs: depth mask + subtle glow for lights */
-function Defs() {
-  return (
-    <defs>
-      {/* Alpha mask: receding lines fade very slightly toward the top */}
-      <mask id="depth">
-        <linearGradient id="fadeY" x1="0" x2="0" y1="0" y2="1">
-          <stop offset="0%" stopColor="white" stopOpacity="0.65" />
-          <stop offset="50%" stopColor="white" stopOpacity="0.85" />
-          <stop offset="100%" stopColor="white" stopOpacity="1" />
-        </linearGradient>
-        <rect x="0" y="0" width="1000" height="640" fill="url(#fadeY)" />
-      </mask>
-
-      {/* Light glow (very restrained to keep it luxury/minimal) */}
-      <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
-        <feGaussianBlur in="SourceGraphic" stdDeviation="2" result="blur" />
-        <feMerge>
-          <feMergeNode in="blur" />
-          <feMergeNode in="SourceGraphic" />
-        </feMerge>
-      </filter>
-    </defs>
-  );
-}
