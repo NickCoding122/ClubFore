@@ -5,7 +5,7 @@
     "name": "Club Fore Cap",
     "price": 25,
     "description": "Breathable performance cap with subtle Club Fore branding.",
-    "images": ["public/CAP.png"]
+    "images": ["/CAP.png"]
   },
   {
     "id": 2,
@@ -13,7 +13,7 @@
     "name": "Club Fore Shirt",
     "price": 35,
     "description": "Lightweight moisture-wicking tee for training and match day.",
-    "images": ["public/SHIRT.png"]
+    "images": ["/SHIRT.png"]
   },
   {
     "id": 3,
@@ -21,7 +21,7 @@
     "name": "Court Shoes",
     "price": 120,
     "description": "All-court shoes with responsive cushioning and durable grip.",
-    "images": ["public/SHOES.png"]
+    "images": ["/SHOES.png"]
   },
   {
     "id": 4,
@@ -29,7 +29,7 @@
     "name": "Club Fore Racket",
     "price": 150,
     "description": "Balanced padel racket engineered for control and power.",
-    "images": ["public/RACKET.png"]
+    "images": ["/RACKET.png"]
   },
   {
     "id": 5,
@@ -37,7 +37,7 @@
     "name": "Club Fore Hoodie",
     "price": 60,
     "description": "Soft fleece hoodie with clean monochrome lines.",
-    "images": ["public/HOODIE.png"]
+    "images": ["/HOODIE.png"]
   },
   {
     "id": 6,
@@ -45,7 +45,7 @@
     "name": "Microfiber Towel",
     "price": 20,
     "description": "Quick-drying microfiber towel sized for courtside use.",
-    "images": ["public/TOWEL.png"]
+    "images": ["/TOWEL.png"]
   },
   {
     "id": 7,
@@ -53,6 +53,6 @@
     "name": "Water Bottle",
     "price": 15,
     "description": "Insulated stainless steel bottle that keeps drinks cold for hours.",
-    "images": ["public/BOTTLE.png"]
+    "images": ["/BOTTLE.png"]
   }
 ]
