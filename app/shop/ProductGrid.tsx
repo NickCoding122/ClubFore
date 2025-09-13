@@ -55,49 +55,57 @@ export function ProductGrid() {
       </div>
       {selected && (
         <div className="fixed inset-0 z-50 bg-black/80 grid place-items-center p-4">
-          <form
-            onSubmit={submit}
-            className="w-full max-w-md space-y-4 bg-neutral-950 border border-white/10 rounded-2xl p-6"
-          >
-            <h2 className="text-xl font-semibold">Register Interest</h2>
-            <p className="text-sm text-white/70">{selected.name} – ${selected.price}</p>
-            <p className="text-sm text-white/70">{selected.description}</p>
-            <input
-              type="text"
-              required
-              placeholder="Name"
-              value={form.name}
-              onChange={(e) => setForm({ ...form, name: e.target.value })}
-              className="w-full rounded-2xl bg-neutral-950 border border-white/20 text-white placeholder-white/40 px-3 py-2 focus:outline-white/60"
+          <div className="w-full max-w-4xl bg-neutral-950 border border-white/10 rounded-2xl p-6 flex flex-col md:flex-row gap-6">
+            <Image
+              src={selected.images[0]}
+              alt={selected.name}
+              width={600}
+              height={600}
+              className="w-full md:w-1/2 h-auto object-contain bg-neutral-900 rounded-xl"
             />
-            <input
-              type="email"
-              required
-              placeholder="Email"
-              value={form.email}
-              onChange={(e) => setForm({ ...form, email: e.target.value })}
-              className="w-full rounded-2xl bg-neutral-950 border border-white/20 text-white placeholder-white/40 px-3 py-2 focus:outline-white/60"
-            />
-            {sent ? (
-              <p className="text-sm">Thanks — we\u2019ll be in touch.</p>
-            ) : (
-              <div className="flex justify-end gap-2">
-                <button
-                  type="button"
-                  onClick={() => setSelected(null)}
-                  className="rounded-2xl border border-white/30 px-6 py-3 text-white hover:border-white/60 focus:outline-white/60 transition-transform duration-150 will-change-transform hover:-translate-y-0.5 hover:ring-1 hover:ring-white/20"
-                >
-                  Cancel
-                </button>
-                <button
-                  type="submit"
-                  className="inline-flex items-center rounded-2xl bg-white text-black px-6 py-3 font-medium hover:opacity-90 focus:outline-white/60 transition-transform duration-150 will-change-transform hover:-translate-y-0.5 hover:ring-1 hover:ring-white/20"
-                >
-                  Send
-                </button>
+            <form onSubmit={submit} className="flex-1 flex flex-col space-y-4">
+              <div>
+                <h2 className="text-xl font-semibold">Register Interest</h2>
+                <p className="text-sm text-white/70">{selected.name} – ${selected.price}</p>
+                <p className="text-sm text-white/70 mt-2">{selected.description}</p>
               </div>
-            )}
-          </form>
+              <input
+                type="text"
+                required
+                placeholder="Name"
+                value={form.name}
+                onChange={(e) => setForm({ ...form, name: e.target.value })}
+                className="w-full rounded-2xl bg-neutral-950 border border-white/20 text-white placeholder-white/40 px-3 py-2 focus:outline-white/60"
+              />
+              <input
+                type="email"
+                required
+                placeholder="Email"
+                value={form.email}
+                onChange={(e) => setForm({ ...form, email: e.target.value })}
+                className="w-full rounded-2xl bg-neutral-950 border border-white/20 text-white placeholder-white/40 px-3 py-2 focus:outline-white/60"
+              />
+              {sent ? (
+                <p className="text-sm">Thanks — we\u2019ll be in touch.</p>
+              ) : (
+                <div className="flex justify-end gap-2">
+                  <button
+                    type="button"
+                    onClick={() => setSelected(null)}
+                    className="rounded-2xl border border-white/30 px-6 py-3 text-white hover:border-white/60 focus:outline-white/60 transition-transform duration-150 will-change-transform hover:-translate-y-0.5 hover:ring-1 hover:ring-white/20"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    className="inline-flex items-center rounded-2xl bg-white text-black px-6 py-3 font-medium hover:opacity-90 focus:outline-white/60 transition-transform duration-150 will-change-transform hover:-translate-y-0.5 hover:ring-1 hover:ring-white/20"
+                  >
+                    Send
+                  </button>
+                </div>
+              )}
+            </form>
+          </div>
         </div>
       )}
     </>
