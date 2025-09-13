@@ -108,18 +108,12 @@ export default function Hero() {
       w = 2,
       style = "#fff"
     ) {
-      if (!points.length) return;
-      const P0 = project(points[0], S, cx, cy);
-      if (!P0) return;
-      ctx.strokeStyle = style;
-      ctx.lineWidth = w;
-      ctx.beginPath();
-      ctx.moveTo(P0.x, P0.y);
-      for (let i = 1; i < points.length; i++) {
-        const Pi = project(points[i], S, cx, cy);
-        if (Pi) ctx.lineTo(Pi.x, Pi.y);
+      if (points.length < 2) return;
+      // Draw each consecutive pair as a clipped segment so that lines
+      // remain visible even if some points fall behind the camera.
+      for (let i = 0; i < points.length - 1; i++) {
+        drawSegment(points[i], points[i + 1], S, cx, cy, w, style);
       }
-      ctx.stroke();
     }
 
     function build() {
