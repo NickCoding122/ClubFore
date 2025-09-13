@@ -67,8 +67,30 @@ export default function Hero() {
       w = 2,
       style = "#fff"
     ) {
-      const A = project(a, S, cx, cy);
-      const B = project(b, S, cx, cy);
+      // Clip segment to a plane just in front of the camera so lines that
+      // begin behind the camera (like the sidelines) are still rendered.
+      const near = CAM.x + 0.01;
+      let a1 = { ...a },
+        b1 = { ...b };
+      if (a1.x <= near && b1.x <= near) return; // entire segment behind camera
+      if (a1.x <= near) {
+        const t = (near - a1.x) / (b1.x - a1.x);
+        a1 = {
+          x: near,
+          y: a1.y + (b1.y - a1.y) * t,
+          z: a1.z + (b1.z - a1.z) * t,
+        };
+      }
+      if (b1.x <= near) {
+        const t = (near - b1.x) / (a1.x - b1.x);
+        b1 = {
+          x: near,
+          y: b1.y + (a1.y - b1.y) * t,
+          z: b1.z + (a1.z - b1.z) * t,
+        };
+      }
+      const A = project(a1, S, cx, cy);
+      const B = project(b1, S, cx, cy);
       if (!A || !B) return;
       ctx.strokeStyle = style;
       ctx.lineWidth = w;
