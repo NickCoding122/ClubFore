@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 
 export default function MembershipPage() {
   return (
-    <div id="main" className="max-w-4xl mx-auto px-4 py-24 space-y-8">
+    <div id="main" className="max-w-4xl mx-auto px-4 py-32 space-y-12">
       <h1 className="text-6xl md:text-7xl tracking-tight leading-[0.95]">Membership</h1>
       <div className="max-w-[72ch] space-y-6 md:space-y-8">
         <p>
@@ -20,7 +20,7 @@ export default function MembershipPage() {
           flexibility, and community.
         </p>
       </div>
-      <div className="grid gap-8 md:grid-cols-3">
+      <div className="grid gap-12 md:grid-cols-3">
         <div>
           <div className="font-semibold">Core — £95/month</div>
           <p className="text-sm text-white/70">
@@ -45,7 +45,7 @@ export default function MembershipPage() {
         </div>
       </div>
       <p className="text-sm text-white/70">Annual membership is available at preferential rates.</p>
-      <div className="border-t border-white/10 mt-12 pt-8 space-y-4">
+      <div className="border-t border-white/10 mt-16 pt-8 space-y-6">
         <ApplyButton />
         <Link href="/contact?reason=membership" className="text-sm focus:outline-white/60">
           Use contact form instead
