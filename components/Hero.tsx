@@ -161,10 +161,7 @@ export default function Hero() {
         [{ x: s1x, y: W / 2, z: 0 }, { x: L / 2, y: W / 2, z: 0 }],
         [{ x: L / 2, y: W / 2, z: 0 }, { x: s2x, y: W / 2, z: 0 }],
       ];
-      const strips: any[] = [];
-      for (let y = 3; y < W; y += 4)
-        strips.push([{ x: 0, y: y, z: COURT.ceilingH }, { x: L, y: y, z: COURT.ceilingH }]);
-      return { segments: g, lines, netPts, strips };
+      return { segments: g, lines, netPts };
     }
     const model = build();
 
@@ -222,7 +219,6 @@ export default function Hero() {
         );
       }
       drawPolyline(model.netPts, S, cx, cy, 2, "#fff");
-      for (const strip of model.strips) drawSegment(strip[0], strip[1], S, cx, cy, 5, "#888");
     }
 
     function loop() {
@@ -237,6 +233,6 @@ export default function Hero() {
     };
   }, []);
 
-  return <canvas ref={canvasRef} className="w-screen h-screen bg-black" />;
+  return <canvas ref={canvasRef} className="block w-dvw h-dvh bg-black" />;
 }
 

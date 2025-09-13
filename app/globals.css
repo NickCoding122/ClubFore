@@ -9,27 +9,6 @@ html, body {
   color: #fff;
 }
 
-html {
-  --side-line-offset: 40px;
-}
-
-body::before,
-body::after {
-  content: "";
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  width: 2px;
-  background: rgba(255, 255, 255, 0.2);
-  pointer-events: none;
-  z-index: 10;
-}
-body::before {
-  left: var(--side-line-offset);
-}
-body::after {
-  right: var(--side-line-offset);
-}
 
 a {
   color: #fff;
