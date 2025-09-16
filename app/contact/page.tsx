@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Contact",
-  description: "Get in touch with Club Fore.",
+  description: "Get in touch with Courtier.",
   openGraph: { images: ["/opengraph-image"] },
   twitter: { images: ["/twitter-image"] }
 };

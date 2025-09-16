@@ -57,7 +57,7 @@ const plans: Plan[] = [
 export const metadata: Metadata = {
   title: "Membership",
   description:
-    "Membership at Club Fore is designed to fit how you play, with three tiers balancing access, flexibility, and community.",
+    "Membership at Courtier is designed to fit how you play, with three tiers balancing access, flexibility, and community.",
   openGraph: { images: ["/opengraph-image"] },
   twitter: { images: ["/twitter-image"] }
 };
@@ -84,7 +84,7 @@ export default function MembershipPage() {
           Membership
         </h1>
         <p className="max-w-2xl mx-auto text-lg text-white/80">
-          Membership at Club Fore is designed to fit how you play, with three tiers
+          Membership at Courtier is designed to fit how you play, with three tiers
           balancing access, flexibility, and community.
         </p>
       </header>

@@ -2,15 +2,15 @@
   {
     "id": 1,
     "slug": "cap",
-    "name": "Club Fore Cap",
+    "name": "Courtier Cap",
     "price": 25,
-    "description": "Breathable performance cap with subtle Club Fore branding.",
+    "description": "Breathable performance cap with subtle Courtier branding.",
     "images": ["/CAP.png"]
   },
   {
     "id": 2,
     "slug": "shirt",
-    "name": "Club Fore Shirt",
+    "name": "Courtier Shirt",
     "price": 35,
     "description": "Lightweight moisture-wicking tee for training and match day.",
     "images": ["/SHIRT.png"]
@@ -26,7 +26,7 @@
   {
     "id": 4,
     "slug": "racket",
-    "name": "Club Fore Racket",
+    "name": "Courtier Racket",
     "price": 150,
     "description": "Balanced padel racket engineered for control and power.",
     "images": ["/RACKET.png"]
@@ -34,7 +34,7 @@
   {
     "id": 5,
     "slug": "hoodie",
-    "name": "Club Fore Hoodie",
+    "name": "Courtier Hoodie",
     "price": 60,
     "description": "Soft fleece hoodie with clean monochrome lines.",
     "images": ["/HOODIE.png"]
