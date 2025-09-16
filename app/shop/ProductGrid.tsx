@@ -48,14 +48,20 @@ export function ProductGrid() {
             />
               <div className="p-4">
                 <div className="text-sm uppercase tracking-wide text-white/80">{p.name}</div>
-                <div className="text-sm text-white/60 mt-1">${p.price}</div>
+                <div className="text-sm text-white/60 mt-1">£{p.price}</div>
               </div>
           </button>
         ))}
       </div>
       {selected && (
-        <div className="fixed inset-0 z-50 bg-black/80 grid place-items-center p-4">
-          <div className="w-full max-w-4xl bg-neutral-950 border border-white/10 rounded-2xl p-6 flex flex-col md:flex-row gap-6">
+        <div
+          className="fixed inset-0 z-50 bg-black/80 grid place-items-center p-4"
+          onClick={() => setSelected(null)}
+        >
+          <div
+            className="w-full max-w-4xl bg-neutral-950 border border-white/10 rounded-2xl p-6 flex flex-col md:flex-row gap-6"
+            onClick={(e) => e.stopPropagation()}
+          >
             <Image
               src={selected.images[0]}
               alt={selected.name}
@@ -66,7 +72,7 @@ export function ProductGrid() {
             <form onSubmit={submit} className="flex-1 flex flex-col space-y-4">
               <div>
                 <h2 className="text-xl font-semibold">Register Interest</h2>
-                <p className="text-sm text-white/70">{selected.name} – ${selected.price}</p>
+                <p className="text-sm text-white/70">{selected.name} – £{selected.price}</p>
                 <p className="text-sm text-white/70 mt-2">{selected.description}</p>
               </div>
               <input
