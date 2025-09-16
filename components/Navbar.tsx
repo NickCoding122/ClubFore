@@ -8,7 +8,7 @@ export function Navbar() {
     <header className="sticky top-0 z-50 bg-black/70 backdrop-blur border-b border-white/10">
       <div className="mx-auto max-w-6xl px-4 py-3 flex items-center justify-between text-white">
         <Link href="/" className="font-semibold tracking-widest text-xl focus:outline-white/60">
-          CLUB FORE
+          COURTIER
         </Link>
         <nav className="hidden md:flex gap-6 text-sm">
           <Link href="/about" className="focus:outline-white/60">

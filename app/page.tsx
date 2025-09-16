@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Hero from "@/components/Hero";
 
 export const metadata: Metadata = {
-  title: "Club Fore",
+  title: "Courtier",
   description: "Members-only padel. Designed in London.",
 };
 

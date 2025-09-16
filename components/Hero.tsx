@@ -207,7 +207,7 @@ export default function Hero() {
       }
       for (const seg of model.lines) drawSegment(seg[0], seg[1], S, cx, cy, 2, "#fff");
 
-      // Club Fore logo on far wall
+      // Courtier logo on far wall
       const logoPos = { x: COURT.L - 0.01, y: COURT.W / 2, z: 2.5 };
       const lp = project(logoPos, S, cx, cy);
       if (lp) {
@@ -218,7 +218,7 @@ export default function Hero() {
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
         ctx.font = `bold ${fontSize}px sans-serif`;
-        ctx.fillText("CLUB FORE", lp.x, lp.y);
+        ctx.fillText("COURTIER", lp.x, lp.y);
       }
 
       const netRes = 20;

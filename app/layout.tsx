@@ -4,9 +4,9 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 
 export const metadata: Metadata = {
-  title: { default: "Club Fore", template: "%s · Club Fore" },
+  title: { default: "Courtier", template: "%s · Courtier" },
   description: "Precision. Power. Minimalism.",
-  openGraph: { title: "Club Fore", description: "Precision. Power. Minimalism.", images: ["/opengraph-image"] },
+  openGraph: { title: "Courtier", description: "Precision. Power. Minimalism.", images: ["/opengraph-image"] },
   twitter: { card: "summary_large_image", images: ["/twitter-image"] }
 };
 

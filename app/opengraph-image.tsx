@@ -21,7 +21,7 @@ export default function OpengraphImage() {
           gap: 40,
         }}
       >
-        <div style={{ fontSize: 128 }}>CLUB FORE</div>
+        <div style={{ fontSize: 128 }}>COURTIER</div>
         <div style={{ fontSize: 48, fontWeight: 400 }}>Precision. Power. Minimalism.</div>
       </div>
     ),
